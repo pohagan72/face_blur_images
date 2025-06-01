@@ -1,6 +1,6 @@
 # Face Blur AI Agent
 
-A simple yet powerful Flask web application that utilizes advanced AI (MTCNN and OpenCV) to detect and blur faces in uploaded images, ensuring privacy with customizable blur strength.
+This AI Agent is uses an advanced neural network to detect and blur faces in uploaded images. Users can adjust the level of blurring.
 
 ## Table of Contents
 
@@ -8,8 +8,6 @@ A simple yet powerful Flask web application that utilizes advanced AI (MTCNN and
 *   [User Experience (UX) Screenshots](#user-experience-ux-screenshots)
 *   [Installation](#installation)
 *   [Usage](#usage)
-*   [Technologies Used](#technologies-used)
-*   [License](#license)
 
 ## Features
 
@@ -84,21 +82,3 @@ Follow these steps to get the application up and running on your local machine:
     *   **Start Processing:** Click the "Start Processing" button.
     *   The original and blurred images will be displayed side-by-side, along with the processing time.
 
-## Technologies Used
-
-*   **Backend:**
-    *   Python
-    *   Flask
-    *   MTCNN (for Face Detection)
-    *   OpenCV (`cv2`) (for Image Processing)
-    *   TensorFlow (backend for MTCNN)
-*   **Frontend:**
-    *   HTML5
-    *   CSS3 (Custom styling)
-    *   JavaScript (Client-side interactivity)
-    *   Bootstrap 5 (UI Framework)
-    *   Font Awesome (Icons)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
