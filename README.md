@@ -5,7 +5,7 @@ This AI Agent is uses an advanced neural network to detect and blur faces in upl
 ## Table of Contents
 
 *   [Features](#features)
-*   [User Experience (UX) Screenshots](#user-experience-ux-screenshots)
+*   [User Experience](#user-experience-ux-screenshots)
 *   [Installation](#installation)
 *   [Usage](#usage)
 
