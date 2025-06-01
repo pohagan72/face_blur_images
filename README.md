@@ -1,15 +1,8 @@
-# Face Blur AI Agent
+# AI Agent for Blurring Faces in Images
 
-This AI Agent is uses an advanced neural network to detect and blur faces in uploaded images. Users can adjust the level of blurring.
+This AI Agent is uses a convolutional d neural network to detect and blur faces in uploaded images. Users can adjust the level of blurring to showcase how adjustable the feature is. 
 
-## Features
 
-*   **Facial Detection:** Leverages the MTCNN (Multi-task Cascaded Convolutional Networks) model for accurate face detection.
-*   **Adjustable Blur Strength:** Users can choose between Light, Medium, and Heavy blur settings via a slider.
-*   **Intuitive Upload:** Supports drag-and-drop and click-to-upload for image files (`.jpg`, `.jpeg`, `.png`, `.webp`).
-*   **Side-by-Side Comparison:** Displays the original and blurred images after processing.
-*   **Processing Time Display:** Shows the time taken for the face blurring operation.
-*   **Dark Mode Support:** Adapts to the user's system preference for light or dark mode.
 
 ## User Experience
 
