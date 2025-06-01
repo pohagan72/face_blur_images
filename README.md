@@ -20,9 +20,7 @@ This AI Agent is uses an advanced neural network to detect and blur faces in upl
 *   **Dark Mode Support:** Adapts to the user's system preference for light or dark mode.
 *   **Downloadable Test File:** Provides a `Group1.jpg` for quick testing.
 
-## User Experience (UX) Screenshots
-
-The screenshots are located in the `assets` folder of this repository.
+## User Experience
 
 ### Main Interface
 
