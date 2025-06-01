@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+venv/
+.venv/
+
+# Flask specific
+instance/
+
+# Uploads and blurred output
+static/uploads/
+static/blurred_output/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/

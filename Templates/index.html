@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Blurring AI Agent</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Epiq AI Innovation Center</h1>
+            <p>Prototype AI Apps & Agents developed by the Epiq AI Platform team</p>
+        </div>
+
+        <!-- App Card for Face Blurring -->
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="app-card">
+                    <!-- Info Icon -->
+                    <i class="fas fa-question-circle info-icon" title="More Info" onclick="toggleTooltip(this)"></i>
+                    <!-- Dynamic Tooltip Content -->
+                    <div class="custom-tooltip">Uses a private neural network that is customizable</div>
+                    <h3>Facial Blur</h3>
+                    <p>Blurs the faces of people in images</p>
+                    <div class="btn-container">
+                        <form id="upload-form" method="POST" enctype="multipart/form-data">
+                            <div class="form-group mb-3">
+                                <div id="drop-zone" class="drop-zone" onclick="document.getElementById('file-input').click()">
+                                    <p>Drag & drop your image here or click to upload</p>
+                                    <input type="file" id="file-input" name="file" accept=".jpg,.jpeg,.png,.webp" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="blur_strength">Blur Strength:</label>
+                                <div class="slider-container">
+                                    <input type="range" id="blur_strength" name="blur_strength" class="form-range" min="1" max="3" step="1" value="2">
+                                    <div class="slider-labels">
+                                        <span>Light</span>
+                                        <span>Medium</span>
+                                        <span>Heavy</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="start-processing" onclick="startProcessing()">Start Processing</button>
+                        </form>
+                        <div class="btn-row">
+                            <a href="#" class="view-demo">View Demo</a>
+                            <!-- Updated "Test File" Button -->
+                            <a href="{{ url_for('download_test_file') }}" class="test-file">Test File</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <!-- Display Results -->
+        <div id="results-container" style="display: none;">
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <img id="original-image" src="" class="card-img-top" alt="Original Image">
+                        <div class="card-body">
+                            <p class="card-text text-center">Original Image</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <img id="blurred-image" src="" class="card-img-top" alt="Blurred Image">
+                        <div class="card-body">
+                            <p class="card-text text-center">Blurred Image</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="alert alert-success" role="alert" id="processing-info"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Toggle Tooltip Function
+        function toggleTooltip(icon) {
+            const tooltip = icon.nextElementSibling;
+            if (tooltip.style.display === 'block') {
+                tooltip.style.display = 'none';
+            } else {
+                document.querySelectorAll('.custom-tooltip').forEach((t) => {
+                    t.style.display = 'none';
+                });
+                tooltip.style.display = 'block';
+            }
+        }
+
+        // Hide tooltip when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!event.target.classList.contains('info-icon')) {
+                document.querySelectorAll('.custom-tooltip').forEach((tooltip) => {
+                    tooltip.style.display = 'none';
+                });
+            }
+        });
+
+        // Dark Mode Detection
+        const body = document.body;
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (prefersDarkMode) {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
+
+        // Blur Strength Slider Mapping (for backend processing)
+        const blurStrengthMap = { 1: 35, 2: 65, 3: 99 };
+        const blurStrengthInput = document.getElementById('blur_strength');
+
+        blurStrengthInput.addEventListener('input', () => {
+            const selectedValue = blurStrengthInput.value;
+            console.log(`Selected Blur Size: ${blurStrengthMap[selectedValue]}`);
+        });
+
+        // Function to handle the start of processing
+        function startProcessing() {
+            const fileInput = document.getElementById('file-input');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('blur_strength', blurStrengthInput.value);
+
+            fetch('/process', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('original-image').src = data.original_image;
+                    document.getElementById('blurred-image').src = data.blurred_image;
+                    document.getElementById('processing-info').innerHTML = `Processing complete!<br>Processing time: ${data.processing_time.toFixed(2)} seconds`;
+                    document.getElementById('results-container').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during processing.');
+            });
+        }
+        // Drag & Drop Functionality
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const uploadForm = document.getElementById('upload-form');
+
+        // Highlight drop zone when file is dragged over
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.add('dragover');
+        });
+
+        // Remove highlight when file is dragged away
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('dragover');
+        });
+
+        // Handle file drop
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+                    fileInput.files = e.dataTransfer.files;
+                    // Removed automatic form submission
+                    // uploadForm.submit();
+                } else {
+                    alert('Invalid file type. Please upload a .jpg, .jpeg, .png, or .webp image.');
+                }
+            }
+        });
+
+        // Handle file input change
+        fileInput.addEventListener('change', (e) => {
+            if (fileInput.files && fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                if (['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+                    // Removed automatic form submission
+                    // uploadForm.submit();
+                } else {
+                    alert('Invalid file type. Please upload a .jpg, .jpeg, .png, or .webp image.');
+                }
+            }
+        });
+
+        // Prevent default behavior for window drag/drop to avoid opening files in browser
+        window.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        window.addEventListener('drop', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

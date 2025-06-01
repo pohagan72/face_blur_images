@@ -1,0 +1,248 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+    background: linear-gradient(135deg, #333, #000);
+    color: #fff;
+}
+
+.app-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.dark-mode .app-card {
+    background: #444;
+    color: #fff;
+}
+
+.app-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.app-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.dark-mode .app-card h3 {
+    color: #fff;
+}
+
+.app-card p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.dark-mode .app-card p {
+    color: #ccc;
+}
+
+.app-card .btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.app-card .btn-row {
+    display: flex;
+    gap: 10px;
+}
+
+.app-card a.view-demo {
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    background: transparent;
+    color: #28a745;
+    border: 2px solid #28a745;
+}
+
+.app-card a.view-demo:hover {
+    background: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.app-card a.test-file {
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    background: transparent;
+    color: #ffc107;
+    border: 2px solid #ffc107;
+}
+
+.app-card a.test-file:hover {
+    background: #ffc107;
+    color: black;
+    border-color: #ffc107;
+}
+
+.app-card .info-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #666;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 1100;
+}
+
+.dark-mode .app-card .info-icon {
+    color: #ccc;
+}
+
+.app-card .info-icon:hover {
+    color: #007bff;
+}
+
+.app-card .custom-tooltip {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 15px;
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+.dark-mode .app-card .custom-tooltip {
+    background-color: #555;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.dark-mode .header h1 {
+    color: #fff;
+}
+
+.header p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.dark-mode .header p {
+    color: #ccc;
+}
+
+.messages .alert {
+    margin-top: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-radius: 15px 15px 0 0;
+}
+
+.card-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.slider-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.dark-mode .slider-labels {
+    color: #ccc;
+}
+
+/* Style the "Start Processing" button to look like "View Demo" */
+.app-card button.start-processing {
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    background: transparent;
+    color: #28a745;  /* Green color like View Demo */
+    border: 2px solid #28a745;
+    width: 100%; /* Ensure it takes full width */
+    text-align: center; /* Center the text */
+    cursor: pointer; /* Add a pointer cursor for better UX */
+}
+
+.app-card button.start-processing:hover {
+    background: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+/* New styles for drag & drop zone */
+.drop-zone {
+    border: 2px dashed #007bff;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    color: #666;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    cursor: default; /* Changed to default to prevent pointer cursor */
+}
+
+.drop-zone.dragover {
+    background-color: #e6f7ff;
+    border-color: #0056b3;
+    color: #0056b3;
+}
+
+.drop-zone p {
+    margin: 0;
+    font-size: 1.1rem;
+}
